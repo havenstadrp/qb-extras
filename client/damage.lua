@@ -2,7 +2,7 @@ CreateThread(function()
 	SetWeaponDamageModifier(`WEAPON_PISTOL`, 1.09)
 	SetWeaponDamageModifier(`WEAPON_SNSPISTOL`, 1.0)
 	SetWeaponDamageModifier(`WEAPON_PISTOL_MK2`, 1.18)
-   	SetWeaponDamageModifier(`WEAPON_STUNGUN`, 0.0) -- Pistol / Melee
+	SetWeaponDamageModifier(`WEAPON_STUNGUN`, 0.0) -- Pistol / Melee
 	SetWeaponDamageModifier(`WEAPON_SMOKEGRENADE`, 0.1) -- Utility
 	SetWeaponDamageModifier(`WEAPON_SNOWBALL`, 0.0) -- Utility
 	SetWeaponDamageModifier(`WEAPON_HIT_BY_WATER_CANNON`, 0.0) -- Fire Truck Cannon

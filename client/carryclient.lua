@@ -20,23 +20,23 @@ local carry = {
 }
 
 local function GetClosestPlayer(radius)
-    local players = GetActivePlayers()
-    local closestDistance = -1
-    local closestPlayer = -1
-    local playerPed = PlayerPedId()
-    local playerCoords = GetEntityCoords(playerPed)
+	local players = GetActivePlayers()
+	local closestDistance = -1
+	local closestPlayer = -1
+	local playerPed = PlayerPedId()
+	local playerCoords = GetEntityCoords(playerPed)
 
-    for _,playerId in ipairs(players) do
-        local targetPed = GetPlayerPed(playerId)
-        if targetPed ~= playerPed then
-            local targetCoords = GetEntityCoords(targetPed)
-            local distance = #(targetCoords-playerCoords)
-            if closestDistance == -1 or closestDistance > distance then
-                closestPlayer = playerId
-                closestDistance = distance
-            end
-        end
-    end
+	for _, playerId in ipairs(players) do
+		local targetPed = GetPlayerPed(playerId)
+		if targetPed ~= playerPed then
+			local targetCoords = GetEntityCoords(targetPed)
+			local distance = #(targetCoords - playerCoords)
+			if closestDistance == -1 or closestDistance > distance then
+				closestPlayer = playerId
+				closestDistance = distance
+			end
+		end
+	end
 	if closestDistance ~= -1 and closestDistance <= radius then
 		return closestPlayer
 	else
@@ -45,16 +45,16 @@ local function GetClosestPlayer(radius)
 end
 
 local function ensureAnimDict(animDict)
-    if not HasAnimDictLoaded(animDict) then
-        RequestAnimDict(animDict)
-        while not HasAnimDictLoaded(animDict) do
-            Wait(0)
-        end        
-    end
-    return animDict
+	if not HasAnimDictLoaded(animDict) then
+		RequestAnimDict(animDict)
+		while not HasAnimDictLoaded(animDict) do
+			Wait(0)
+		end
+	end
+	return animDict
 end
 
-RegisterCommand("carry",function(source, args)
+RegisterCommand("carry", function(source, args)
 	if not carry.InProgress then
 		local closestPlayer = GetClosestPlayer(3)
 		if closestPlayer then
@@ -62,23 +62,23 @@ RegisterCommand("carry",function(source, args)
 			if targetSrc ~= -1 then
 				carry.InProgress = true
 				carry.targetSrc = targetSrc
-				TriggerServerEvent("CarryPeople:sync",targetSrc)
+				TriggerServerEvent("CarryPeople:sync", targetSrc)
 				ensureAnimDict(carry.personCarrying.animDict)
 				carry.type = "carrying"
 			else
-                QBCore.Functions.Notify("No one nearby to carry!", 'error', 2500)
+				QBCore.Functions.Notify("No one nearby to carry!", 'error', 2500)
 			end
 		else
-            QBCore.Functions.Notify("No one nearby to carry!", 'error', 2500)
+			QBCore.Functions.Notify("No one nearby to carry!", 'error', 2500)
 		end
 	else
 		carry.InProgress = false
 		ClearPedSecondaryTask(PlayerPedId())
 		DetachEntity(PlayerPedId(), true, false)
-		TriggerServerEvent("CarryPeople:stop",carry.targetSrc)
+		TriggerServerEvent("CarryPeople:stop", carry.targetSrc)
 		carry.targetSrc = 0
 	end
-end,false)
+end, false)
 
 RegisterNetEvent("CarryPeople:syncTarget", function(targetSrc)
 	local targetPed = GetPlayerPed(GetPlayerFromServerId(targetSrc))

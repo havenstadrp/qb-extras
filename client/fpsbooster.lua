@@ -1,9 +1,8 @@
-
 local QBCore = exports['qb-core']:GetCoreObject()
-local type 
+local type
 
 RegisterCommand("fps", function()
-	exports['qb-menu']:openMenu({
+    exports['qb-menu']:openMenu({
         {
             header = "🔥 FPS Booster Menu",
             isMenuHeader = true, -- Set to true to make a nonclickable title
@@ -14,7 +13,7 @@ RegisterCommand("fps", function()
             params = {
                 event = "qb-fpsbooster:client:event",
                 args = {
-                   type = "reset"
+                    type = "reset"
                 }
             }
         },
@@ -53,13 +52,13 @@ end)
 
 RegisterNetEvent('qb-fpsbooster:client:event', function(data)
     if data.type == "reset" then
-        FPSBoosterUM(true,true,true,true,5.0,5.0,5.0,10.0,10.0,true,false,"Reset")
+        FPSBoosterUM(true, true, true, true, 5.0, 5.0, 5.0, 10.0, 10.0, true, false, "Reset")
     elseif data.type == "ulow" then
-        FPSBoosterUM(false,false,true,false,0.0,0.0,0.0,0.0,0.0,false,nil,"Ultralow")
+        FPSBoosterUM(false, false, true, false, 0.0, 0.0, 0.0, 0.0, 0.0, false, nil, "Ultralow")
     elseif data.type == "low" then
-        FPSBoosterUM(false,false,true,false,0.0,0.0,0.0,5.0,5.0,false,nil,"Low")
+        FPSBoosterUM(false, false, true, false, 0.0, 0.0, 0.0, 5.0, 5.0, false, nil, "Low")
     elseif data.type == "medium" then
-        FPSBoosterUM(true,false,true,false,5.0,3.0,3.0,3.0,3.0,false,false,"Medium")
+        FPSBoosterUM(true, false, true, false, 5.0, 3.0, 3.0, 3.0, 3.0, false, false, "Medium")
     end
     type = data.type
 end)
@@ -158,7 +157,7 @@ CreateThread(function()
                 SetPedAoBlobRendering(ped, false)
                 Wait(1)
             end
-        
+
             --// Find closest object and set the alpha
             for obj in GetWorldObjects() do
                 if not IsEntityOnScreen(obj) then
@@ -248,7 +247,7 @@ local function EnumerateEntities(initFunc, moveFunc, disposeFunc)
                 return
             end
 
-            local enum = {handle = iter, destructor = disposeFunc}
+            local enum = { handle = iter, destructor = disposeFunc }
             setmetatable(enum, entityEnumerator)
 
             local next = true
@@ -279,7 +278,7 @@ function GetWorldPickups()
     return EnumerateEntities(FindFirstPickup, FindNextPickup, EndFindPickup)
 end
 
-function FPSBoosterUM(shadow,air,entity,dynamic,tracker,depth,bounds,distance,tweak,sirens,lights,notify)
+function FPSBoosterUM(shadow, air, entity, dynamic, tracker, depth, bounds, distance, tweak, sirens, lights, notify)
     RopeDrawShadowEnabled(shadow)
     CascadeShadowsClearShadowSampleType()
     CascadeShadowsSetAircraftMode(air)
@@ -292,5 +291,5 @@ function FPSBoosterUM(shadow,air,entity,dynamic,tracker,depth,bounds,distance,tw
     SetLightsCutoffDistanceTweak(tweak)
     DistantCopCarSirens(sirens)
     SetArtificialLightsState(lights)
-    QBCore.Functions.Notify(notify,"success")
+    QBCore.Functions.Notify(notify, "success")
 end
